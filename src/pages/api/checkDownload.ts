@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import validUrl from 'valid-url'
 import ytdl from 'ytdl-core'
+import formatYouTubeUrl from './_config';
 
 
 export default async function checkDownload(
@@ -12,13 +13,13 @@ export default async function checkDownload(
     const { URL } = req.query
 
     if (!URL) {
-      return res.status(400).json({ error: 'URL de YouTube no proporcionada' });
+      return res.status(400).json({ error: 'YouTube URL not provided' });
     }
 
     const formattedUrl = formatYouTubeUrl(URL as string)
 
     if (!formattedUrl) {
-      return res.status(400).json({ error: 'URL de YouTube no válida' })
+      return res.status(400).json({ error: 'Invalid YouTube URL' })
     }
 
     const videoInfo = await ytdl.getInfo(formattedUrl)
@@ -48,19 +49,4 @@ export default async function checkDownload(
   } else {
     res.status(405).json({ error: 'METHOD NOT ALLOWED' })
   }
-}
-
-function formatYouTubeUrl(url: string) {
-
-  let urlFormated = url;
-
-  if (!url.startsWith('https://') && !url.startsWith('http://')) {
-    urlFormated = 'https://' + url
-  }
-
-  if (!validUrl.isUri(urlFormated) || !ytdl.validateURL(urlFormated)) {
-    return false
-  }
-
-  return urlFormated
 }

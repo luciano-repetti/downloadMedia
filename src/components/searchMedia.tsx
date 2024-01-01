@@ -7,6 +7,7 @@ import { VideoContext } from '@/context/providerVideo'
 
 const SearchMedia = () => {
   const [valueInput, setValueInput] = useState('')
+  const [loading, setLoading] = useState(false)
   const { setVideo } = useContext(VideoContext)!
 
   const changeInput = (value: string) => {
@@ -34,13 +35,17 @@ const SearchMedia = () => {
     const linkYoutube = valueInput
 
     try {
+      setLoading(true);
       const response = await axios.get(`/api/checkDownload?URL=${linkYoutube}`)
-      setVideo(response.data)
-      setValueInput('')
+      setVideo(response.data);
+      setValueInput('');
     } catch (error) {
       alert('An error occurred with the search')
       setVideo(null)
       setValueInput('')
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -60,7 +65,7 @@ const SearchMedia = () => {
         }
       />
       <ButtonCopy action={pastedLink} />
-      <Button onClick={() => handleSearch()} className="bg-ebony-500">
+      <Button isLoading={loading} onClick={() => handleSearch()} className="bg-ebony-500">
         Search
       </Button>
     </div>

@@ -37,6 +37,7 @@ const SearchMedia = () => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/checkDownload?URL=${linkYoutube}`)
+      console.log(response.data);
       setVideo(response.data);
       setValueInput('');
     } catch (error) {
@@ -50,7 +51,7 @@ const SearchMedia = () => {
   }
 
   return (
-    <div className="flex items-center w-2/3 gap-4 h-min">
+    <div className="flex flex-col md:items-center w-full md:flex-row xl:w-2/3 gap-2 md:gap-4 h-min">
       <Input
         type="url"
         value={valueInput}
@@ -64,10 +65,12 @@ const SearchMedia = () => {
           </div>
         }
       />
-      <ButtonCopy action={pastedLink} />
-      <Button isLoading={loading} onClick={() => handleSearch()} className="bg-ebony-500">
-        Search
-      </Button>
+      <div className='flex gap-2 md:gap-4'>
+        <ButtonCopy action={pastedLink} />
+        <Button isLoading={loading} onClick={() => handleSearch()} className="w-full md:w-fit bg-ebony-500">
+          Search
+        </Button>
+      </div>
     </div>
   )
 }

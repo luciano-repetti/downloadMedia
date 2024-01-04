@@ -21,7 +21,7 @@ export default function Home() {
         }}
         className="min-h-screen bg-cover bg-center bg-image-colors"
       ></div>
-      <div className='flex w-full flex-col items-center relative max-w-[80%] pt-32 gap-20 z-50'>
+      <div className='flex w-full flex-col items-center relative px-4 md:px-8 xl:px-0 2xl:max-w-[80%] pt-16 md:pt-32 gap-10 md:gap-20 z-50'>
         <VideoProvider>
           <SearchMedia />
           <DownloadMedia />

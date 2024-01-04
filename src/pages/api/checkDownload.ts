@@ -23,7 +23,7 @@ export default async function checkDownload(
     }
 
     const videoInfo = await ytdl.getInfo(formattedUrl)
-    const videoURL = ytdl.chooseFormat(videoInfo.formats, { quality: 'highestvideo' }).url;
+    // const videoURL = ytdl.chooseFormat(videoInfo.formats, { quality: 'highestvideo' }).url;
 
     const videoName = videoInfo.videoDetails.title
     const videoTime = videoInfo.videoDetails.lengthSeconds
@@ -42,7 +42,7 @@ export default async function checkDownload(
           author.thumbnails?.[author.thumbnails?.length - 1]?.url || null,
       },
       views: videoViews,
-      videoURL: videoURL
+      videoURL: formattedUrl
     }
 
     res.status(200).json(response)

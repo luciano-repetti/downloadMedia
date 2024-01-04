@@ -30,9 +30,9 @@ const DownloadMedia = () => {
   
     try {
       setLoading(true);
-      // Construir la URL de descarga directamente en lugar de utilizar axios
+      
       const downloadUrl = `/api/downloadMedia?URL=${videoInfo?.videoURL}&downloadFormat=${format}&quality=${quality}&title=${encodeURIComponent(videoInfo?.name || '')}`;
-      // Crear un enlace temporal para iniciar la descarga
+
       const link = document.createElement('a');
       link.href = downloadUrl;
       link.target = '_blank';

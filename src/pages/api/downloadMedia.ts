@@ -20,13 +20,11 @@ export default async function downloadMedia(
       let qualityOption: ChooseFormatQuality;
 
       if (downloadFormat === 'audio-only') {
-        // Filtrar para obtener formatos que contienen audio
         formatFilter = 'audioonly';
         fileExtension = 'mp3';
         contentType = 'audio/mpeg';
         qualityOption = quality === 'high' ? 'highest' : 'lowest';
       } else {
-        // Filtrar para obtener formatos que contienen tanto video como audio
         formatFilter = (format) => format.hasVideo && format.hasAudio && (format.container === 'mp4' || format.container === 'webm');
         fileExtension = 'mp4';
         contentType = 'video/mp4';
@@ -35,7 +33,7 @@ export default async function downloadMedia(
 
       res.setHeader(
         'Content-Disposition',
-        `attachment; filename="${sanitizeFilename(title as string, 40)}.${fileExtension}"`
+        `attachment; filename="${encodeURIComponent(sanitizeFilename(title as string, 40))}.${fileExtension}"`
       );
 
       res.setHeader('Content-Type', contentType);

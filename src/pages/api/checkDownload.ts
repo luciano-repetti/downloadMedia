@@ -2,7 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import validUrl from 'valid-url'
 import ytdl from 'ytdl-core'
-import formatYouTubeUrl from './_config';
+import { formatYouTubeUrl } from './_config';
+
 
 
 export default async function checkDownload(

@@ -17,8 +17,12 @@ function formatYouTubeUrl(url: string) {
 }
 
 function sanitizeFilename(filename: string, maxLength: number): string {
-  // Remove invalid characters and limit length
-  return filename.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, maxLength);
+  const sanitized = filename.replace(/[^\p{L}a-zA-Z0-9.-]/gu, '_').replace(/\s+/g, '_').substring(0, maxLength);
+
+  // console.log('Original filename:', filename);
+  // console.log('Sanitized filename:', sanitized);
+
+  return sanitized;
 }
 
 export { formatYouTubeUrl, sanitizeFilename }

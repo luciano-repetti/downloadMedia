@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import ytdl, { Filter, ChooseFormatQuality } from 'ytdl-core';
+import { sanitizeFilename } from './_config';
 
 export default async function downloadMedia(
   req: NextApiRequest,
@@ -20,10 +21,10 @@ export default async function downloadMedia(
 
       if (downloadFormat === 'audio-only') {
         // Filtrar para obtener formatos que contienen audio
-        formatFilter = 'audioonly'
+        formatFilter = 'audioonly';
         fileExtension = 'mp3';
         contentType = 'audio/mpeg';
-        qualityOption = quality === 'high' ? 'highest' : 'lowest'        
+        qualityOption = quality === 'high' ? 'highest' : 'lowest';
       } else {
         // Filtrar para obtener formatos que contienen tanto video como audio
         formatFilter = (format) => format.hasVideo && format.hasAudio && (format.container === 'mp4' || format.container === 'webm');
@@ -34,15 +35,15 @@ export default async function downloadMedia(
 
       res.setHeader(
         'Content-Disposition',
-        `attachment; filename="${(title as string).substring(0, 40)}.${fileExtension}"`
+        `attachment; filename="${sanitizeFilename(title as string, 40)}.${fileExtension}"`
       );
+
+      res.setHeader('Content-Type', contentType);
 
       ytdl(URL as string, {
         filter: formatFilter,
         quality: qualityOption,
       }).pipe(res, { end: true });
-
-      res.setHeader('Content-Type', contentType);
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: 'Error downloading media' });

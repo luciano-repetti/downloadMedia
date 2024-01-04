@@ -1,7 +1,7 @@
 import ytdl from 'ytdl-core';
 import validUrl from 'valid-url';
 
-export default function formatYouTubeUrl(url: string) {
+function formatYouTubeUrl(url: string) {
 
   let urlFormated = url;
 
@@ -15,3 +15,10 @@ export default function formatYouTubeUrl(url: string) {
 
   return urlFormated
 }
+
+function sanitizeFilename(filename: string, maxLength: number): string {
+  // Remove invalid characters and limit length
+  return filename.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, maxLength);
+}
+
+export { formatYouTubeUrl, sanitizeFilename }

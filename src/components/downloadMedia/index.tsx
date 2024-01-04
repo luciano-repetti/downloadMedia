@@ -42,7 +42,7 @@ const DownloadMedia = () => {
       document.body.removeChild(link);
     } catch (error) {
       setLoading(false);
-      console.error(error);
+      // console.error(error);
       alert(error);
     } finally {
       setLoading(false);

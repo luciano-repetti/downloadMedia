@@ -37,7 +37,7 @@ const SearchMedia = () => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/checkDownload?URL=${linkYoutube}`)
-      console.log(response.data);
+      // console.log(response.data);
       setVideo(response.data);
       setValueInput('');
     } catch (error) {
